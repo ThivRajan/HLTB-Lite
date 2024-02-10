@@ -2,6 +2,9 @@ import { HowLongToBeatService } from 'howlongtobeat'
 
 const hltbService = new HowLongToBeatService()
 
+// From https://github.com/vercel/next.js/discussions/50497, needed for prerender error
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: Request) {
 	try {
 		const gamesMatch = req.headers.get('game')

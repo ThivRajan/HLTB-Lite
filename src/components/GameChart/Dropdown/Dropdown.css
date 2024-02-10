@@ -67,7 +67,9 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	transition: background 200ms, color 200ms;
+	transition:
+		background 200ms,
+		color 200ms;
 }
 
 .remove:hover {

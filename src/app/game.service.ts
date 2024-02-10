@@ -1,5 +1,3 @@
-const baseUrl = 'https://tan-seal-slip.cyclic.app'
-
 export interface Game {
 	description: string
 	gameplayCompletionist: number
@@ -15,13 +13,17 @@ export interface Game {
 }
 
 export const getDefaultGames = async (): Promise<Game[]> => {
-	const gamesResponse = await fetch(`${baseUrl}/games`)
-	const gamesJSON = await gamesResponse.json()
-	return gamesJSON.data as Game[]
+	return await getSearchedGames()
 }
 
-export const getSearchedGames = async (game: string): Promise<Game[]> => {
-	const gamesResponse = await fetch(`${baseUrl}/games/${game}`)
-	const gamesJSON = await gamesResponse.json()
-	return gamesJSON.data as Game[]
+export const getSearchedGames = async (game = ''): Promise<Game[]> => {
+	const response = await fetch(`api/games`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			game,
+		},
+	})
+	const responseJSON = await response.json()
+	return (responseJSON.games || []) as Game[]
 }

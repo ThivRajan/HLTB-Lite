@@ -135,7 +135,7 @@ const GameChart: FC<{
 	)
 }
 
-const CustomCursor = (props: {
+const CustomCursor = (props?: {
 	x
 	y
 	width
@@ -145,6 +145,8 @@ const CustomCursor = (props: {
 	setGames
 	editMode
 }) => {
+	if (!props) return
+
 	const { x, y, width, height, payload, games, setGames, editMode } = props
 	return (
 		<Rectangle

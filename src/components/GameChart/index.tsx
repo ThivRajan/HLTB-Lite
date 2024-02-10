@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 import { FC, useEffect, useState } from 'react'
+import { BsEraserFill } from 'react-icons/bs'
+import { RiCloseFill } from 'react-icons/ri'
 import {
 	Bar,
 	BarChart,
@@ -73,13 +75,13 @@ const GameChart: FC<{
 						className={`chart-control edit-chart ${editMode && 'edit-enabled'}`}
 						onClick={() => setEditMode(!editMode)}
 					>
-						Pencil Icon
+						<BsEraserFill />
 					</button>
 					<button
 						className={'chart-control clear-chart'}
 						onClick={() => setGames([])}
 					>
-						Close Icon
+						<RiCloseFill />
 					</button>
 				</div>
 			</div>

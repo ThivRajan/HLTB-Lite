@@ -1,4 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react'
+import { IoIosArrowDown } from 'react-icons/io'
+import { RiCloseFill } from 'react-icons/ri'
+
 import './Dropdown.css'
 
 const Dropdown: FC<{
@@ -35,7 +38,7 @@ const Dropdown: FC<{
 									setSelected(selected.filter((r) => s !== r))
 								}}
 							>
-								Close Icon
+								<RiCloseFill />
 							</span>
 						</div>
 					))
@@ -47,7 +50,7 @@ const Dropdown: FC<{
 						onClick={() => setdropdownOpen(!dropdownOpen)}
 						className="dropdown-toggle"
 					>
-						Arrow Down Icon
+						<IoIosArrowDown />
 					</div>
 				) : (
 					<></>

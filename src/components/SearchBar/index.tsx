@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from 'react'
+import { MdAddChart } from 'react-icons/md'
 import './SearchBar.css'
 
 const SearchBar: FC<{
@@ -84,7 +85,7 @@ const SearchBar: FC<{
 									<span className="completion-tag complete-tag">{`Cmpl: ${game.gameplayCompletionist} hrs`}</span>
 								</div>
 							</div>
-							Chart Icon
+							<MdAddChart className="chart-icon" />
 						</div>
 					))}
 				</div>

@@ -1,0 +1,62 @@
+.chart-container {
+	color: var(--text);
+	background: var(--bg);
+	padding: 10px;
+	height: max-content;
+	border-radius: 5px;
+	box-shadow: 0 0 10px 1px var(--shadow);
+
+	--bg: white;
+	--text: #424242;
+	--red: #fa5757;
+	--shadow: #e2e2e2;
+}
+
+.chart-options {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 450px) {
+	.chart-controls {
+		display: flex;
+	}
+}
+
+.chart-control {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	border-radius: 3px;
+	background: none;
+	color: #b4bdc3;
+	border: none;
+	outline: none;
+	padding: 5px;
+	font-size: 30px;
+	transition: color 200ms;
+	cursor: pointer;
+}
+
+.edit-chart:hover,
+.edit-chart:active {
+	color: var(--fg);
+}
+
+.edit-enabled {
+	border: 1px solid var(--fg);
+	color: var(--fg);
+}
+
+.clear-chart:hover,
+.clear-chart:active {
+	color: var(--red);
+}
+
+.removal-tooltip {
+	background: white;
+	padding: 10px;
+	border: 1px solid var(--red);
+	color: var(--red);
+}

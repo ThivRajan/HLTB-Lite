@@ -1,12 +1,10 @@
-'use client'
-
 import GameChart from '@/components/GameChart'
 import SearchBar from '@/components/SearchBar'
 import { useEffect, useState } from 'react'
 import { Game, getDefaultGames } from './game.service'
 import styles from './page.module.css'
 
-export default function Home() {
+export default function App() {
 	const [games, setGames] = useState<Game[]>([])
 	const [loading, setLoading] = useState(true)
 

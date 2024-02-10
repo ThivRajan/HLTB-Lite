@@ -1,16 +1,4 @@
-export interface Game {
-	description: string
-	gameplayCompletionist: number
-	gameplayMain: number
-	gameplayMainExtra: number
-	id: string
-	imageUrl: string
-	name: string
-	platforms: string[]
-	playableOn: string[]
-	similarity: number
-	timeLabels: string[][]
-}
+import { Game } from './game.model'
 
 export const getDefaultGames = async (): Promise<Game[]> => {
 	return await getSearchedGames()

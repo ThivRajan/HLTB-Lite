@@ -3,7 +3,8 @@
 import GameChart from '@/components/GameChart'
 import SearchBar from '@/components/SearchBar'
 import { useEffect, useState } from 'react'
-import { Game, getDefaultGames } from './game.service'
+import { Game } from './game.model'
+import { getDefaultGames } from './game.service'
 import styles from './page.module.css'
 
 export default function Home() {

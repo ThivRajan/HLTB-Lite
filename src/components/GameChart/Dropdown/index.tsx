@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RiCloseFill } from 'react-icons/ri'
 
-import './Dropdown.css'
+import styles from './dropdown.module.css'
 
 const Dropdown: FC<{
 	options: string[]
@@ -23,16 +23,16 @@ const Dropdown: FC<{
 	}
 
 	return (
-		<div className="dropdown-container" ref={node}>
+		<div className={styles.dropdownContainer} ref={node}>
 			<div
-				className={`dropdown-selection ${dropdownOpen ? 'selection-highlight' : ''}`}
+				className={`${styles.dropdownSelection} ${dropdownOpen ? styles.selectionHighlight : ''}`}
 			>
 				{selected.length ? (
 					selected.map((s, idx) => (
-						<div key={idx} className="selected">
-							<span className="selected-chip">{s}</span>
+						<div key={idx} className={styles.selected}>
+							<span className={styles.selectedChip}>{s}</span>
 							<span
-								className="remove"
+								className={styles.remove}
 								onClick={(event) => {
 									event.stopPropagation()
 									setSelected(selected.filter((r) => s !== r))
@@ -43,12 +43,12 @@ const Dropdown: FC<{
 						</div>
 					))
 				) : (
-					<span className="placeholder">Select...</span>
+					<span className={styles.placeholder}>Select...</span>
 				)}
 				{selected.length !== options.length ? (
 					<div
 						onClick={() => setdropdownOpen(!dropdownOpen)}
-						className="dropdown-toggle"
+						className={styles.dropdownToggle}
 					>
 						<IoIosArrowDown />
 					</div>
@@ -57,13 +57,13 @@ const Dropdown: FC<{
 				)}
 			</div>
 			{dropdownOpen ? (
-				<div className="options">
+				<div className={styles.options}>
 					{selected.length !== options.length ? (
-						<li onClick={() => setSelected(options)} className="option">
+						<li onClick={() => setSelected(options)} className={styles.option}>
 							All
 						</li>
 					) : (
-						<li className="empty-option">...</li>
+						<li className={styles.emptyOption}>...</li>
 					)}
 					{options
 						.filter((option) => !selected.includes(option))
@@ -71,7 +71,7 @@ const Dropdown: FC<{
 							<li
 								key={idx}
 								onClick={() => setSelected(selected.concat(option))}
-								className="option"
+								className={styles.option}
 							>
 								{option}
 							</li>

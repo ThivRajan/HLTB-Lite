@@ -13,7 +13,7 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
-import './GameChart.css'
+import styles from './gameChart.module.css'
 
 import Dropdown from './Dropdown'
 
@@ -63,22 +63,22 @@ const GameChart: FC<{
 	}))
 
 	return (
-		<div className="chart-container">
-			<div className="chart-options">
+		<div className={styles.chartContainer}>
+			<div className={styles.chartOptions}>
 				<Dropdown
 					options={Object.values(CompletionTypes)}
 					selected={completionTypes}
 					setSelected={setCompletionTypes}
 				/>
-				<div className="chart-controls">
+				<div className={styles.chartControls}>
 					<button
-						className={`chart-control edit-chart ${editMode && 'edit-enabled'}`}
+						className={`${styles.chartControl} ${styles.editChart} ${editMode && styles.editEnabled}`}
 						onClick={() => setEditMode(!editMode)}
 					>
 						<BsEraserFill />
 					</button>
 					<button
-						className={'chart-control clear-chart'}
+						className={`${styles.chartControl} ${styles.clearChart}`}
 						onClick={() => setGames([])}
 					>
 						<RiCloseFill />
@@ -88,7 +88,11 @@ const GameChart: FC<{
 			{completionTypes.length ? (
 				<div>
 					<ResponsiveContainer width="100%" height={isMobile ? 500 : 600}>
-						<BarChart margin={{ right: 50 }} data={chartData} className="chart">
+						<BarChart
+							margin={{ right: 50 }}
+							data={chartData}
+							className={styles.chart}
+						>
 							<XAxis
 								dataKey="title"
 								angle={50}
@@ -170,7 +174,7 @@ const CustomCursor = (props?: {
 }
 
 const CustomTooltip = () => {
-	return <div className="removal-tooltip">Remove game from chart</div>
+	return <div className={styles.removalTooltip}>Remove game from chart</div>
 }
 
 export default GameChart

@@ -1,4 +1,4 @@
-.chart-container {
+.chartContainer {
 	color: var(--text);
 	background: var(--bg);
 	padding: 10px;
@@ -12,19 +12,19 @@
 	--shadow: #e2e2e2;
 }
 
-.chart-options {
+.chartOptions {
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 450px) {
-	.chart-controls {
+	.chartControls {
 		display: flex;
 	}
 }
 
-.chart-control {
+.chartControl {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -39,22 +39,22 @@
 	cursor: pointer;
 }
 
-.edit-chart:hover,
-.edit-chart:active {
+.editChart:hover,
+.editChart:active {
 	color: var(--fg);
 }
 
-.edit-enabled {
+.editEnabled {
 	border: 1px solid var(--fg);
 	color: var(--fg);
 }
 
-.clear-chart:hover,
-.clear-chart:active {
+.clearChart:hover,
+.clearChart:active {
 	color: var(--red);
 }
 
-.removal-tooltip {
+.removalTooltip {
 	background: white;
 	padding: 10px;
 	border: 1px solid var(--red);

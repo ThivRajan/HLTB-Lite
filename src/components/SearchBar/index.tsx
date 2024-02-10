@@ -3,7 +3,7 @@ import { getSearchedGames } from '@/app/game.service'
 import debounce from 'lodash.debounce'
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { MdAddChart } from 'react-icons/md'
-import './SearchBar.css'
+import styles from './searchBar.module.css'
 
 const SearchBar: FC<{
 	games: Game[]
@@ -44,20 +44,20 @@ const SearchBar: FC<{
 	}
 
 	return (
-		<div className="search-container" ref={node}>
+		<div className={styles.searchContainer} ref={node}>
 			<input
 				type="text"
-				className={`search-bar ${searchResults.length && searchOpen ? 'search-bar-open' : ''}`}
+				className={`${styles.searchBar} ${searchResults.length && searchOpen ? styles.searchBarOpen : ''}`}
 				onClick={() => setSearchOpen(true)}
 				onChange={handleSearchChange}
 				placeholder={'Search for games'}
 			/>
 			{searchResults.length && searchOpen ? (
-				<div className="results-container">
+				<div className={styles.resultsContainer}>
 					{searchResults.map((game) => (
 						<div
 							key={game.id}
-							className="result-entry"
+							className={styles.resultEntry}
 							onClick={() => {
 								if (games.length < 15) {
 									addGame(game)
@@ -68,15 +68,15 @@ const SearchBar: FC<{
 								}
 							}}
 						>
-							<div className="result-info">
-								<span className="result-title">{game.name}</span>
-								<div className="completion-tags">
-									<span className="completion-tag main-tag">{`Main: ${game.gameplayMain} hrs`}</span>
-									<span className="completion-tag extra-tag">{`Extra: ${game.gameplayMainExtra} hrs`}</span>
-									<span className="completion-tag complete-tag">{`Cmpl: ${game.gameplayCompletionist} hrs`}</span>
+							<div className={styles.resultInfo}>
+								<span className={styles.resultTitle}>{game.name}</span>
+								<div className={styles.completionTags}>
+									<span>{`Main: ${game.gameplayMain} hrs`}</span>
+									<span>{`Extra: ${game.gameplayMainExtra} hrs`}</span>
+									<span>{`Cmpl: ${game.gameplayCompletionist} hrs`}</span>
 								</div>
 							</div>
-							<MdAddChart className="chart-icon" />
+							<MdAddChart className={styles.chartIcon} />
 						</div>
 					))}
 				</div>

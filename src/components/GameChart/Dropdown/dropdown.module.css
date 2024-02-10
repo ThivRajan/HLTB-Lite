@@ -1,4 +1,4 @@
-.dropdown-container {
+.dropdownContainer {
 	position: relative;
 	min-width: 130px;
 
@@ -13,32 +13,32 @@
 	--placeholder: var(--border);
 }
 
-.dropdown-selection,
+.dropdownSelection,
 .options {
 	border: 1px solid var(--border);
 	border-radius: 3px;
 	background: white;
 }
 
-.dropdown-selection {
+.dropdownSelection {
 	padding: 5px;
 	display: flex;
 	font-size: 15px;
 	justify-content: space-between;
 }
 
-.selection-highlight {
+.selectionHighlight {
 	border-color: var(--highlight);
 }
 
-.dropdown-toggle {
+.dropdownToggle {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	margin: auto 0 auto 10px;
 	font-size: 22px;
 	color: var(--tag-text);
-	height: max-content;
+	height: maxContent;
 	cursor: pointer;
 }
 
@@ -55,7 +55,7 @@
 	display: flex;
 }
 
-.selected-chip,
+.selectedChip,
 .remove {
 	border-radius: 1px;
 	padding: 2px 5px;
@@ -87,6 +87,10 @@
 	box-sizing: border-box;
 }
 
+.option {
+	list-style: none;
+}
+
 .empty-option,
 .option {
 	color: var(--option-text);
@@ -98,8 +102,4 @@
 	color: var(--highlight);
 	cursor: pointer;
 	border-radius: 2px;
-}
-
-li {
-	list-style: none;
 }

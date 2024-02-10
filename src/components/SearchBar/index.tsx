@@ -1,13 +1,6 @@
 import { Game, getSearchedGames } from '@/app/game.service'
-import _ from 'lodash'
-import {
-	ChangeEvent,
-	FC,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from 'react'
+import debounce from 'lodash.debounce'
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { MdAddChart } from 'react-icons/md'
 import './SearchBar.css'
 
@@ -36,15 +29,12 @@ const SearchBar: FC<{
 	}
 
 	const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
-		debounce(event.target.value.trim())
+		debouncedSearch(event.target.value.trim())
 	}
 
-	const debounce = useCallback(
-		_.debounce((_searchVal: string) => {
-			fetchSearchedGames(_searchVal)
-		}, 300),
-		[],
-	)
+	const debouncedSearch = debounce((searchVal: string) => {
+		fetchSearchedGames(searchVal)
+	}, 300)
 
 	const addGame = (game: Game) => {
 		if (!games.some((currentGame) => currentGame.name === game.name)) {
@@ -58,7 +48,7 @@ const SearchBar: FC<{
 				type="text"
 				className={`search-bar ${searchResults.length && searchOpen ? 'search-bar-open' : ''}`}
 				onClick={() => setSearchOpen(true)}
-				onChange={(event) => handleSearchChange(event)}
+				onChange={handleSearchChange}
 				placeholder={'Search for games'}
 			/>
 			{searchResults.length && searchOpen ? (

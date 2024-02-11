@@ -1,6 +1,7 @@
 'use client'
 
 import GameChart from '@/components/GameChart'
+import Loader from '@/components/Loader'
 import SearchBar from '@/components/SearchBar'
 import { useEffect, useState } from 'react'
 import { Game } from './game.model'
@@ -31,10 +32,7 @@ export default function Home() {
 				</a>
 			</h3>
 			{loading ? (
-				<div className={styles.loadingContainer}>
-					<div className={styles.loader}></div>
-					<div className={styles.loadingText}>Loading completion data...</div>
-				</div>
+				<Loader isLoading={loading} />
 			) : (
 				<div>
 					<SearchBar games={games} setGames={setGames} />

@@ -7,8 +7,6 @@ body {
 	--fg-light: #88c2f5;
 	--accent: #f07e27;
 	--accent-light: #f1bd93;
-	--loader-bg: #f2f4f6;
-	--loader-fg: var(--fg);
 }
 
 @media only screen and (max-width: 800px) {

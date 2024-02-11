@@ -38,24 +38,18 @@ export default function Home() {
 			) : (
 				<div>
 					<SearchBar games={games} setGames={setGames} />
-					{games.length ? (
-						<GameChart games={games} setGames={setGames} />
-					) : (
-						<></>
-					)}
+					{!!games.length && <GameChart games={games} setGames={setGames} />}
 				</div>
 			)}
 			<footer>
-				<div>
-					Made by{' '}
-					<a
-						href="https://thivagar.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Thivagar Nadarajan
-					</a>
-				</div>
+				<span>Made by</span>
+				<a
+					href="https://thivagar.com"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Thivagar Nadarajan
+				</a>
 			</footer>
 		</div>
 	)

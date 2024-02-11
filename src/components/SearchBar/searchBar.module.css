@@ -30,7 +30,6 @@
 
 .searchBar::placeholder {
 	color: var(--placeholder);
-	font-family: open sans;
 }
 
 .searchBarOpen,

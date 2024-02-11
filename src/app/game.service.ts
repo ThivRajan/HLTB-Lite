@@ -1,3 +1,4 @@
+import { showErrorMessage } from '@/utils/error.util'
 import { Game } from './game.model'
 
 export const getDefaultGames = async (): Promise<Game[]> => {
@@ -5,13 +6,18 @@ export const getDefaultGames = async (): Promise<Game[]> => {
 }
 
 export const getSearchedGames = async (game = ''): Promise<Game[]> => {
-	const response = await fetch(`api/games`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			game,
-		},
-	})
-	const responseJSON = await response.json()
-	return (responseJSON.games || []) as Game[]
+	try {
+		const response = await fetch(`api/games`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				game,
+			},
+		})
+		const responseJSON = await response.json()
+		return (responseJSON.games || []) as Game[]
+	} catch {
+		showErrorMessage('Unable to get games')
+		return []
+	}
 }

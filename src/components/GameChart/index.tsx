@@ -1,5 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
 import { CompletionType } from '@/enums/completion-type.enum'
 import { FC, useEffect, useState } from 'react'
 import { BsEraserFill } from 'react-icons/bs'
@@ -16,6 +14,7 @@ import {
 } from 'recharts'
 import styles from './gameChart.module.css'
 
+import { Game } from '@/models/game.model'
 import Dropdown from './Dropdown'
 
 const GameChart: FC<{
@@ -109,7 +108,7 @@ const GameChart: FC<{
 										editMode={editMode}
 									/>
 								}
-								content={editMode && CustomTooltip}
+								content={editMode ? CustomTooltip : <></>}
 							/>
 							{Object.values(CompletionType).map((type, idx) => (
 								<Bar dataKey={type} fill={barColors[type]} key={idx}>
@@ -117,11 +116,11 @@ const GameChart: FC<{
 										chartData.map((entry, index) => (
 											<Cell
 												key={index}
-												onClick={() =>
+												onClick={() => {
 													setGames(
 														games.filter((game) => game.name != entry.title),
 													)
-												}
+												}}
 												style={{ cursor: 'pointer' }}
 											/>
 										))}
@@ -138,14 +137,14 @@ const GameChart: FC<{
 }
 
 const CustomCursor = (props?: {
-	x
-	y
-	width
-	height
-	payload
-	games
-	setGames
-	editMode
+	x?: number
+	y?: number
+	width?: number
+	height?: number
+	payload?: any
+	games: Game[]
+	setGames: React.Dispatch<React.SetStateAction<Game[]>>
+	editMode?: boolean
 }) => {
 	if (!props) return
 

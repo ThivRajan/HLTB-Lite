@@ -36,12 +36,3 @@ a {
 a:hover {
 	color: var(--accent);
 }
-
-footer {
-	margin-top: 30px;
-	color: var(--fg-light);
-	font-size: 15px;
-	font-weight: 600;
-	display: flex;
-	justify-content: center;
-}

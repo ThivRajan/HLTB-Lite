@@ -81,8 +81,11 @@ const GameChart: FC<{
 				</div>
 			</div>
 			{completionTypes.length ? (
-				<div>
-					<ResponsiveContainer width="100%" height={isMobile ? 500 : 600}>
+				<div className={styles.chartContent}>
+					<ResponsiveContainer
+						width={Math.max(1000, 100 * games.length)}
+						height={isMobile ? 500 : 600}
+					>
 						<BarChart
 							margin={{ right: 50 }}
 							data={chartData}
@@ -90,7 +93,7 @@ const GameChart: FC<{
 						>
 							<XAxis
 								dataKey="title"
-								angle={50}
+								angle={60}
 								textAnchor="start"
 								height={300}
 								width={300}

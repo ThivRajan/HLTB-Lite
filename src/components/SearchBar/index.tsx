@@ -59,13 +59,7 @@ const SearchBar: FC<{
 							key={game.id}
 							className={styles.resultEntry}
 							onClick={() => {
-								if (games.length < 15) {
-									addGame(game)
-								} else {
-									window.alert(
-										'There can only be a maximum of 15 games in the chart, clear the chart to add more games.',
-									)
-								}
+								addGame(game)
 							}}
 						>
 							<div className={styles.resultInfo}>

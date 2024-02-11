@@ -60,3 +60,9 @@
 	border: 1px solid var(--red);
 	color: var(--red);
 }
+
+.chartContent {
+	padding-top: 4rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+}

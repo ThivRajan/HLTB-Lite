@@ -24,7 +24,7 @@ const Dropdown: FC<{
 
 	return (
 		<div
-			className={styles.dropdownContainer}
+			className={styles.container}
 			ref={node}
 			onClick={() => setdropdownOpen(!dropdownOpen)}
 		>

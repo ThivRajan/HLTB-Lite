@@ -23,7 +23,11 @@ const Dropdown: FC<{
 	}
 
 	return (
-		<div className={styles.dropdownContainer} ref={node}>
+		<div
+			className={styles.dropdownContainer}
+			ref={node}
+			onClick={() => setdropdownOpen(!dropdownOpen)}
+		>
 			<div
 				className={`${styles.dropdownSelection} ${dropdownOpen ? styles.selectionHighlight : ''}`}
 			>
@@ -45,40 +49,32 @@ const Dropdown: FC<{
 				) : (
 					<span className={styles.placeholder}>Select...</span>
 				)}
-				{selected.length !== options.length ? (
-					<div
-						onClick={() => setdropdownOpen(!dropdownOpen)}
-						className={styles.dropdownToggle}
-					>
-						<IoIosArrowDown />
-					</div>
-				) : (
-					<></>
-				)}
+				<div className={styles.dropdownToggle}>
+					<IoIosArrowDown />
+				</div>
 			</div>
-			{dropdownOpen ? (
-				<div className={styles.options}>
-					{selected.length !== options.length ? (
-						<li onClick={() => setSelected(options)} className={styles.option}>
-							All
-						</li>
-					) : (
-						<li className={styles.emptyOption}>...</li>
-					)}
-					{options
-						.filter((option) => !selected.includes(option))
-						.map((option, idx) => (
-							<li
+			{dropdownOpen && (
+				<ul className={styles.options}>
+					{options.map((option, idx) => {
+						const isSelected = selected.includes(option)
+						const newSelection = isSelected
+							? selected.filter((selectedOption) => selectedOption !== option)
+							: selected.concat(option)
+						return (
+							<div
 								key={idx}
-								onClick={() => setSelected(selected.concat(option))}
+								onClick={(e) => {
+									e.stopPropagation()
+									setSelected(newSelection)
+								}}
 								className={styles.option}
 							>
+								<input type="checkbox" checked={isSelected} />
 								{option}
-							</li>
-						))}
-				</div>
-			) : (
-				<></>
+							</div>
+						)
+					})}
+				</ul>
 			)}
 		</div>
 	)

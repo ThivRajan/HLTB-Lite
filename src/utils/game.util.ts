@@ -1,5 +1,5 @@
 import { showErrorMessage } from '@/utils/error.util'
-import { Game } from './game.model'
+import { Game } from '../models/game.model'
 
 export const getDefaultGames = async (): Promise<Game[]> => {
 	return await getSearchedGames()

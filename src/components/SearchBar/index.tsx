@@ -1,5 +1,5 @@
-import { Game } from '@/app/game.model'
-import { getSearchedGames } from '@/app/game.service'
+import { Game } from '@/models/game.model'
+import { getSearchedGames } from '@/utils/game.util'
 import debounce from 'lodash.debounce'
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { MdAddChart } from 'react-icons/md'

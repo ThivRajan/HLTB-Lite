@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
+import { CompletionType } from '@/enums/completion-type.enum'
 import { FC, useEffect, useState } from 'react'
 import { BsEraserFill } from 'react-icons/bs'
 import { RiCloseFill } from 'react-icons/ri'
@@ -17,26 +18,20 @@ import styles from './gameChart.module.css'
 
 import Dropdown from './Dropdown'
 
-enum CompletionTypes {
-	Main = 'Main',
-	Extra = 'Extra',
-	Complete = 'Complete',
-}
-
 const GameChart: FC<{
 	games: Game[]
 	setGames: React.Dispatch<React.SetStateAction<Game[]>>
 }> = ({ games, setGames }): JSX.Element => {
 	const [completionTypes, setCompletionTypes] = useState<string[]>(
-		Object.values(CompletionTypes),
+		Object.values(CompletionType),
 	)
 	const [isMobile, setIsMobile] = useState(false)
 	const [editMode, setEditMode] = useState(false)
 
 	const barColors = {
-		[CompletionTypes.Main]: '#e15127',
-		[CompletionTypes.Extra]: '#c4b693',
-		[CompletionTypes.Complete]: '#1e5982',
+		[CompletionType.Main]: '#e15127',
+		[CompletionType.Extra]: '#c4b693',
+		[CompletionType.Complete]: '#1e5982',
 	}
 
 	useEffect(() => {
@@ -51,14 +46,14 @@ const GameChart: FC<{
 
 	const chartData = games.map((game) => ({
 		title: game.name,
-		...(completionTypes.includes(CompletionTypes.Main)
-			? { [CompletionTypes.Main]: game.gameplayMain }
+		...(completionTypes.includes(CompletionType.Main)
+			? { [CompletionType.Main]: game.gameplayMain }
 			: {}),
-		...(completionTypes.includes(CompletionTypes.Extra)
-			? { [CompletionTypes.Extra]: game.gameplayMainExtra }
+		...(completionTypes.includes(CompletionType.Extra)
+			? { [CompletionType.Extra]: game.gameplayMainExtra }
 			: {}),
-		...(completionTypes.includes(CompletionTypes.Complete)
-			? { [CompletionTypes.Complete]: game.gameplayCompletionist }
+		...(completionTypes.includes(CompletionType.Complete)
+			? { [CompletionType.Complete]: game.gameplayCompletionist }
 			: {}),
 	}))
 
@@ -66,7 +61,7 @@ const GameChart: FC<{
 		<div className={styles.chartContainer}>
 			<div className={styles.chartOptions}>
 				<Dropdown
-					options={Object.values(CompletionTypes)}
+					options={Object.values(CompletionType)}
 					selected={completionTypes}
 					setSelected={setCompletionTypes}
 				/>
@@ -113,7 +108,7 @@ const GameChart: FC<{
 								}
 								content={editMode && CustomTooltip}
 							/>
-							{Object.values(CompletionTypes).map((type, idx) => (
+							{Object.values(CompletionType).map((type, idx) => (
 								<Bar dataKey={type} fill={barColors[type]} key={idx}>
 									{editMode &&
 										chartData.map((entry, index) => (

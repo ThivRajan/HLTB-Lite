@@ -108,7 +108,7 @@ const GameChart: FC<{
 										editMode={editMode}
 									/>
 								}
-								content={editMode ? CustomTooltip : <></>}
+								{...(editMode ? { content: CustomTooltip } : {})}
 							/>
 							{Object.values(CompletionType).map((type, idx) => (
 								<Bar dataKey={type} fill={barColors[type]} key={idx}>

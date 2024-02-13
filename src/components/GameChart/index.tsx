@@ -17,6 +17,12 @@ import styles from './gameChart.module.css'
 import { Game } from '@/models/game.model'
 import Dropdown from './Dropdown'
 
+const BAR_COLORS = {
+	[CompletionType.Main]: '#e3aa98',
+	[CompletionType.Extra]: '#bfbfbb',
+	[CompletionType.Complete]: '#72acd6',
+}
+
 const GameChart: FC<{
 	games: Game[]
 	setGames: React.Dispatch<React.SetStateAction<Game[]>>
@@ -26,12 +32,6 @@ const GameChart: FC<{
 	)
 	const [isMobile, setIsMobile] = useState(false)
 	const [editMode, setEditMode] = useState(false)
-
-	const barColors = {
-		[CompletionType.Main]: '#e15127',
-		[CompletionType.Extra]: '#c4b693',
-		[CompletionType.Complete]: '#1e5982',
-	}
 
 	useEffect(() => {
 		window.addEventListener('resize', () => {
@@ -65,18 +65,14 @@ const GameChart: FC<{
 					setSelected={setCompletionTypes}
 				/>
 				<div className={styles.chartControls}>
-					<button
+					<BsEraserFill
 						className={`${styles.chartControl} ${styles.editChart} ${editMode && styles.editEnabled}`}
 						onClick={() => setEditMode(!editMode)}
-					>
-						<BsEraserFill />
-					</button>
-					<button
+					/>
+					<RiCloseFill
 						className={`${styles.chartControl} ${styles.clearChart}`}
 						onClick={() => setGames([])}
-					>
-						<RiCloseFill />
-					</button>
+					/>
 				</div>
 			</div>
 			{completionTypes.length ? (
@@ -111,7 +107,7 @@ const GameChart: FC<{
 								{...(editMode ? { content: CustomTooltip } : {})}
 							/>
 							{Object.values(CompletionType).map((type, idx) => (
-								<Bar dataKey={type} fill={barColors[type]} key={idx}>
+								<Bar dataKey={type} fill={BAR_COLORS[type]} key={idx}>
 									{editMode &&
 										chartData.map((entry, index) => (
 											<Cell

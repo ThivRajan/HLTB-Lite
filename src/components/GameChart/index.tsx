@@ -19,7 +19,7 @@ import Dropdown from './Dropdown'
 
 const BAR_COLORS = {
 	[CompletionType.Main]: '#e3aa98',
-	[CompletionType.Extra]: '#bfbfbb',
+	[CompletionType.Extra]: '#dbd193',
 	[CompletionType.Complete]: '#72acd6',
 }
 

@@ -1,8 +1,10 @@
-import { Game, getSearchedGames } from '@/app/game.service'
+import { Game } from '@/models/game.model'
+import { getSearchedGames } from '@/utils/game.util'
 import debounce from 'lodash.debounce'
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { MdAddChart } from 'react-icons/md'
-import './SearchBar.css'
+import { Oval } from 'react-loader-spinner'
+import styles from './searchBar.module.css'
 
 const SearchBar: FC<{
 	games: Game[]
@@ -10,12 +12,19 @@ const SearchBar: FC<{
 }> = ({ games, setGames }): JSX.Element => {
 	const [searchOpen, setSearchOpen] = useState(false)
 	const [searchResults, setSearchResults] = useState<Game[]>([])
+	const [isLoading, setIsLoading] = useState(false)
 
 	const node = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClick)
 	}, [])
+
+	useEffect(() => {
+		if (isLoading) {
+			setIsLoading(false)
+		}
+	}, [searchResults])
 
 	const handleClick = (event: MouseEvent) => {
 		if (node.current && !node.current.contains(event.target as Node)) {
@@ -33,6 +42,7 @@ const SearchBar: FC<{
 	}
 
 	const debouncedSearch = debounce((searchVal: string) => {
+		setIsLoading(true)
 		fetchSearchedGames(searchVal)
 	}, 300)
 
@@ -43,39 +53,46 @@ const SearchBar: FC<{
 	}
 
 	return (
-		<div className="search-container" ref={node}>
-			<input
-				type="text"
-				className={`search-bar ${searchResults.length && searchOpen ? 'search-bar-open' : ''}`}
-				onClick={() => setSearchOpen(true)}
-				onChange={handleSearchChange}
-				placeholder={'Search for games'}
-			/>
+		<div className={styles.searchContainer} ref={node}>
+			<div
+				className={`${styles.searchBar} ${searchResults.length && searchOpen ? styles.searchBarOpen : ''}`}
+			>
+				<input
+					type="text"
+					onClick={() => setSearchOpen(true)}
+					onChange={handleSearchChange}
+					placeholder={'Search for games'}
+				/>
+				<Oval
+					height={30}
+					width={30}
+					color="#88c2f5"
+					secondaryColor="#88c2f5"
+					visible={isLoading}
+					ariaLabel="oval-loading"
+					strokeWidth={4}
+					strokeWidthSecondary={4}
+				/>
+			</div>
 			{searchResults.length && searchOpen ? (
-				<div className="results-container">
+				<div className={styles.resultsContainer}>
 					{searchResults.map((game) => (
 						<div
 							key={game.id}
-							className="result-entry"
+							className={styles.resultEntry}
 							onClick={() => {
-								if (games.length < 15) {
-									addGame(game)
-								} else {
-									window.alert(
-										'There can only be a maximum of 15 games in the chart, clear the chart to add more games.',
-									)
-								}
+								addGame(game)
 							}}
 						>
-							<div className="result-info">
-								<span className="result-title">{game.name}</span>
-								<div className="completion-tags">
-									<span className="completion-tag main-tag">{`Main: ${game.gameplayMain} hrs`}</span>
-									<span className="completion-tag extra-tag">{`Extra: ${game.gameplayMainExtra} hrs`}</span>
-									<span className="completion-tag complete-tag">{`Cmpl: ${game.gameplayCompletionist} hrs`}</span>
+							<div className={styles.resultInfo}>
+								<span className={styles.resultTitle}>{game.name}</span>
+								<div className={styles.completionTags}>
+									<span>{`Main: ${game.gameplayMain} hrs`}</span>
+									<span>{`Extra: ${game.gameplayMainExtra} hrs`}</span>
+									<span>{`Cmpl: ${game.gameplayCompletionist} hrs`}</span>
 								</div>
 							</div>
-							<MdAddChart className="chart-icon" />
+							<MdAddChart className={styles.chartIcon} />
 						</div>
 					))}
 				</div>

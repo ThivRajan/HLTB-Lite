@@ -1,0 +1,12 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 2em;
+}
+
+.loadingText {
+	color: var(--fg);
+	font-weight: 600;
+}

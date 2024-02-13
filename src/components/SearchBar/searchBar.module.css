@@ -1,4 +1,4 @@
-.search-container {
+.searchContainer {
 	margin: 20px 0;
 	background: none;
 
@@ -13,34 +13,41 @@
 	--tag-text: #b4bdc3;
 }
 
-.search-bar,
-.results-container {
+.searchBar,
+.resultsContainer {
 	background: white;
 	border-radius: var(--border-radius);
 }
 
-.search-bar {
+.searchBar {
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	padding: 7px 10px;
-	font-size: 25px;
 	border: 1px solid var(--placeholder);
 	box-sizing: border-box;
 	transition: border-color 500ms;
 }
 
-.search-bar::placeholder {
-	color: var(--placeholder);
-	font-family: open sans;
-}
-
-.search-bar-open,
-.search-bar:focus {
+.searchBarOpen,
+.searchBar:focus-within {
 	outline: none;
 	margin-bottom: 0;
 	border-color: var(--border-highlight);
 }
 
-.results-container {
+.searchBar > input {
+	border: none;
+	outline: none;
+	width: 100%;
+	font-size: 25px;
+}
+
+.searchBar > input::placeholder {
+	color: var(--placeholder);
+}
+
+.resultsContainer {
 	z-index: 99;
 	width: 100%;
 	box-sizing: border-box;
@@ -51,17 +58,17 @@
 	overflow-y: auto;
 }
 
-.results-container::-webkit-scrollbar {
+.resultsContainer::-webkit-scrollbar {
 	width: 7px;
 	background: none;
 }
 
-.results-container:hover::-webkit-scrollbar-thumb {
+.resultsContainer:hover::-webkit-scrollbar-thumb {
 	background: var(--tag-bg);
 	border-radius: var(--border-radius);
 }
 
-.result-entry {
+.resultEntry {
 	display: flex;
 	margin: 10px 0;
 	padding: 10px;
@@ -71,7 +78,7 @@
 	color: var(--search-text);
 }
 
-.result-entry:hover {
+.resultEntry:hover {
 	transition:
 		background 200ms,
 		color 200ms;
@@ -80,23 +87,23 @@
 	cursor: pointer;
 }
 
-.result-info {
+.resultInfo {
 	display: flex;
 	flex-direction: column;
 	font-size: 15px;
 	font-weight: lighter;
 }
 
-.result-title {
+.resultTitle {
 	font-size: 18px;
 	font-weight: bold;
 }
 
-.completion-tags {
+.completionTags {
 	margin: 7px 0;
 }
 
-.completion-tag {
+.completionTags > span {
 	margin: 4px;
 	padding: 7px;
 	border-radius: 3px;
@@ -106,15 +113,15 @@
 	font-size: 13px;
 }
 
-.completion-tag:first-child {
+.completionTags > span:first-child {
 	margin-left: 0;
 }
 
-.chart-icon {
+.chartIcon {
 	font-size: 2em;
 }
 
-.chart-icon {
+.chartIcon {
 	font-size: 25px;
 	margin: auto 0;
 }

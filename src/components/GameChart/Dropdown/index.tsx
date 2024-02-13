@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { IoIosArrowDown } from 'react-icons/io'
 import { RiCloseFill } from 'react-icons/ri'
 
-import './Dropdown.css'
+import styles from './dropdown.module.css'
 
 const Dropdown: FC<{
 	options: string[]
@@ -23,16 +23,20 @@ const Dropdown: FC<{
 	}
 
 	return (
-		<div className="dropdown-container" ref={node}>
+		<div
+			className={styles.container}
+			ref={node}
+			onClick={() => setdropdownOpen(!dropdownOpen)}
+		>
 			<div
-				className={`dropdown-selection ${dropdownOpen ? 'selection-highlight' : ''}`}
+				className={`${styles.dropdownSelection} ${dropdownOpen ? styles.selectionHighlight : ''}`}
 			>
 				{selected.length ? (
 					selected.map((s, idx) => (
-						<div key={idx} className="selected">
-							<span className="selected-chip">{s}</span>
+						<div key={idx} className={styles.selected}>
+							<span className={styles.selectedChip}>{s}</span>
 							<span
-								className="remove"
+								className={styles.remove}
 								onClick={(event) => {
 									event.stopPropagation()
 									setSelected(selected.filter((r) => s !== r))
@@ -43,42 +47,34 @@ const Dropdown: FC<{
 						</div>
 					))
 				) : (
-					<span className="placeholder">Select...</span>
+					<span className={styles.placeholder}>Select...</span>
 				)}
-				{selected.length !== options.length ? (
-					<div
-						onClick={() => setdropdownOpen(!dropdownOpen)}
-						className="dropdown-toggle"
-					>
-						<IoIosArrowDown />
-					</div>
-				) : (
-					<></>
-				)}
-			</div>
-			{dropdownOpen ? (
-				<div className="options">
-					{selected.length !== options.length ? (
-						<li onClick={() => setSelected(options)} className="option">
-							All
-						</li>
-					) : (
-						<li className="empty-option">...</li>
-					)}
-					{options
-						.filter((option) => !selected.includes(option))
-						.map((option, idx) => (
-							<li
-								key={idx}
-								onClick={() => setSelected(selected.concat(option))}
-								className="option"
-							>
-								{option}
-							</li>
-						))}
+				<div className={styles.dropdownToggle}>
+					<IoIosArrowDown />
 				</div>
-			) : (
-				<></>
+			</div>
+			{dropdownOpen && (
+				<ul className={styles.options}>
+					{options.map((option, idx) => {
+						const isSelected = selected.includes(option)
+						const newSelection = isSelected
+							? selected.filter((selectedOption) => selectedOption !== option)
+							: selected.concat(option)
+						return (
+							<div
+								key={idx}
+								onClick={(e) => {
+									e.stopPropagation()
+									setSelected(newSelection)
+								}}
+								className={styles.option}
+							>
+								<input type="checkbox" checked={isSelected} />
+								{option}
+							</div>
+						)
+					})}
+				</ul>
 			)}
 		</div>
 	)

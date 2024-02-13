@@ -1,9 +1,13 @@
 'use client'
 
 import GameChart from '@/components/GameChart'
+import Loader from '@/components/Loader'
 import SearchBar from '@/components/SearchBar'
 import { useEffect, useState } from 'react'
-import { Game, getDefaultGames } from './game.service'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { Game } from '../models/game.model'
+import { getDefaultGames } from '../utils/game.util'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -30,32 +34,32 @@ export default function Home() {
 				</a>
 			</h3>
 			{loading ? (
-				<div className={styles.loadingContainer}>
-					<div className={styles.loader}></div>
-					<div className={styles.loadingText}>Loading completion data...</div>
-				</div>
+				<Loader isLoading={loading} />
 			) : (
 				<div>
 					<SearchBar games={games} setGames={setGames} />
-					{games.length ? (
-						<GameChart games={games} setGames={setGames} />
-					) : (
-						<></>
-					)}
+					{!!games.length && <GameChart games={games} setGames={setGames} />}
 				</div>
 			)}
 			<footer>
-				<div>
-					Made by{' '}
-					<a
-						href="https://thivagar.com"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Thivagar Nadarajan
-					</a>
-				</div>
+				<span>Made by</span>
+				<a
+					href="https://thivagar.com"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Thivagar Nadarajan
+				</a>
 			</footer>
+			<ToastContainer
+				position="top-center"
+				autoClose={800}
+				hideProgressBar={true}
+				closeOnClick
+				rtl={false}
+				theme="dark"
+				style={{ fontSize: '1.2em' }}
+			/>
 		</div>
 	)
 }

@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
+import { CompletionType } from '@/enums/completion-type.enum'
 import { FC, useEffect, useState } from 'react'
 import { BsEraserFill } from 'react-icons/bs'
 import { RiCloseFill } from 'react-icons/ri'
@@ -13,14 +12,15 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts'
-import './GameChart.css'
+import styles from './gameChart.module.css'
 
+import { Game } from '@/models/game.model'
 import Dropdown from './Dropdown'
 
-enum CompletionTypes {
-	Main = 'Main',
-	Extra = 'Extra',
-	Complete = 'Complete',
+const BAR_COLORS = {
+	[CompletionType.Main]: '#e3aa98',
+	[CompletionType.Extra]: '#dbd193',
+	[CompletionType.Complete]: '#72acd6',
 }
 
 const GameChart: FC<{
@@ -28,16 +28,10 @@ const GameChart: FC<{
 	setGames: React.Dispatch<React.SetStateAction<Game[]>>
 }> = ({ games, setGames }): JSX.Element => {
 	const [completionTypes, setCompletionTypes] = useState<string[]>(
-		Object.values(CompletionTypes),
+		Object.values(CompletionType),
 	)
 	const [isMobile, setIsMobile] = useState(false)
 	const [editMode, setEditMode] = useState(false)
-
-	const barColors = {
-		[CompletionTypes.Main]: '#e15127',
-		[CompletionTypes.Extra]: '#c4b693',
-		[CompletionTypes.Complete]: '#1e5982',
-	}
 
 	useEffect(() => {
 		window.addEventListener('resize', () => {
@@ -51,47 +45,50 @@ const GameChart: FC<{
 
 	const chartData = games.map((game) => ({
 		title: game.name,
-		...(completionTypes.includes(CompletionTypes.Main)
-			? { [CompletionTypes.Main]: game.gameplayMain }
+		...(completionTypes.includes(CompletionType.Main)
+			? { [CompletionType.Main]: game.gameplayMain }
 			: {}),
-		...(completionTypes.includes(CompletionTypes.Extra)
-			? { [CompletionTypes.Extra]: game.gameplayMainExtra }
+		...(completionTypes.includes(CompletionType.Extra)
+			? { [CompletionType.Extra]: game.gameplayMainExtra }
 			: {}),
-		...(completionTypes.includes(CompletionTypes.Complete)
-			? { [CompletionTypes.Complete]: game.gameplayCompletionist }
+		...(completionTypes.includes(CompletionType.Complete)
+			? { [CompletionType.Complete]: game.gameplayCompletionist }
 			: {}),
 	}))
 
 	return (
-		<div className="chart-container">
-			<div className="chart-options">
+		<div className={styles.chartContainer}>
+			<div className={styles.chartOptions}>
 				<Dropdown
-					options={Object.values(CompletionTypes)}
+					options={Object.values(CompletionType)}
 					selected={completionTypes}
 					setSelected={setCompletionTypes}
 				/>
-				<div className="chart-controls">
-					<button
-						className={`chart-control edit-chart ${editMode && 'edit-enabled'}`}
+				<div className={styles.chartControls}>
+					<BsEraserFill
+						className={`${styles.chartControl} ${styles.editChart} ${editMode && styles.editEnabled}`}
 						onClick={() => setEditMode(!editMode)}
-					>
-						<BsEraserFill />
-					</button>
-					<button
-						className={'chart-control clear-chart'}
+					/>
+					<RiCloseFill
+						className={`${styles.chartControl} ${styles.clearChart}`}
 						onClick={() => setGames([])}
-					>
-						<RiCloseFill />
-					</button>
+					/>
 				</div>
 			</div>
 			{completionTypes.length ? (
-				<div>
-					<ResponsiveContainer width="100%" height={isMobile ? 500 : 600}>
-						<BarChart margin={{ right: 50 }} data={chartData} className="chart">
+				<div className={styles.chartContent}>
+					<ResponsiveContainer
+						width={Math.max(1000, 100 * games.length)}
+						height={isMobile ? 500 : 600}
+					>
+						<BarChart
+							margin={{ right: 50 }}
+							data={chartData}
+							className={styles.chart}
+						>
 							<XAxis
 								dataKey="title"
-								angle={50}
+								angle={60}
 								textAnchor="start"
 								height={300}
 								width={300}
@@ -107,19 +104,19 @@ const GameChart: FC<{
 										editMode={editMode}
 									/>
 								}
-								content={editMode && CustomTooltip}
+								{...(editMode ? { content: CustomTooltip } : {})}
 							/>
-							{Object.values(CompletionTypes).map((type, idx) => (
-								<Bar dataKey={type} fill={barColors[type]} key={idx}>
+							{Object.values(CompletionType).map((type, idx) => (
+								<Bar dataKey={type} fill={BAR_COLORS[type]} key={idx}>
 									{editMode &&
 										chartData.map((entry, index) => (
 											<Cell
 												key={index}
-												onClick={() =>
+												onClick={() => {
 													setGames(
 														games.filter((game) => game.name != entry.title),
 													)
-												}
+												}}
 												style={{ cursor: 'pointer' }}
 											/>
 										))}
@@ -136,14 +133,14 @@ const GameChart: FC<{
 }
 
 const CustomCursor = (props?: {
-	x
-	y
-	width
-	height
-	payload
-	games
-	setGames
-	editMode
+	x?: number
+	y?: number
+	width?: number
+	height?: number
+	payload?: any
+	games: Game[]
+	setGames: React.Dispatch<React.SetStateAction<Game[]>>
+	editMode?: boolean
 }) => {
 	if (!props) return
 
@@ -170,7 +167,7 @@ const CustomCursor = (props?: {
 }
 
 const CustomTooltip = () => {
-	return <div className="removal-tooltip">Remove game from chart</div>
+	return <div className={styles.removalTooltip}>Remove game from chart</div>
 }
 
 export default GameChart

@@ -1,14 +1,11 @@
 body {
 	margin: 5vh 20vw;
 	margin-bottom: 3vh;
-	font-family: open sans;
 	background: #f6fbff;
 	--fg: #1f7cce;
 	--fg-light: #88c2f5;
 	--accent: #f07e27;
 	--accent-light: #f1bd93;
-	--loader-bg: #f2f4f6;
-	--loader-fg: var(--fg);
 }
 
 @media only screen and (max-width: 800px) {
@@ -35,13 +32,4 @@ a {
 
 a:hover {
 	color: var(--accent);
-}
-
-footer {
-	margin-top: 30px;
-	color: var(--fg-light);
-	font-size: 15px;
-	font-weight: 600;
-	display: flex;
-	justify-content: center;
 }

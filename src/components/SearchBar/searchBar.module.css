@@ -21,22 +21,30 @@
 
 .searchBar {
 	width: 100%;
+	display: flex;
+	justify-content: space-between;
 	padding: 7px 10px;
-	font-size: 25px;
 	border: 1px solid var(--placeholder);
 	box-sizing: border-box;
 	transition: border-color 500ms;
 }
 
-.searchBar::placeholder {
-	color: var(--placeholder);
-}
-
 .searchBarOpen,
-.searchBar:focus {
+.searchBar:focus-within {
 	outline: none;
 	margin-bottom: 0;
 	border-color: var(--border-highlight);
+}
+
+.searchBar > input {
+	border: none;
+	outline: none;
+	width: 100%;
+	font-size: 25px;
+}
+
+.searchBar > input::placeholder {
+	color: var(--placeholder);
 }
 
 .resultsContainer {

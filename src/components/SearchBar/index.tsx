@@ -3,6 +3,7 @@ import { getSearchedGames } from '@/utils/game.util'
 import debounce from 'lodash.debounce'
 import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { MdAddChart } from 'react-icons/md'
+import { Oval } from 'react-loader-spinner'
 import styles from './searchBar.module.css'
 
 const SearchBar: FC<{
@@ -11,12 +12,19 @@ const SearchBar: FC<{
 }> = ({ games, setGames }): JSX.Element => {
 	const [searchOpen, setSearchOpen] = useState(false)
 	const [searchResults, setSearchResults] = useState<Game[]>([])
+	const [isLoading, setIsLoading] = useState(false)
 
 	const node = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
 		document.addEventListener('mousedown', handleClick)
 	}, [])
+
+	useEffect(() => {
+		if (isLoading) {
+			setIsLoading(false)
+		}
+	}, [searchResults])
 
 	const handleClick = (event: MouseEvent) => {
 		if (node.current && !node.current.contains(event.target as Node)) {
@@ -34,6 +42,7 @@ const SearchBar: FC<{
 	}
 
 	const debouncedSearch = debounce((searchVal: string) => {
+		setIsLoading(true)
 		fetchSearchedGames(searchVal)
 	}, 300)
 
@@ -45,13 +54,26 @@ const SearchBar: FC<{
 
 	return (
 		<div className={styles.searchContainer} ref={node}>
-			<input
-				type="text"
+			<div
 				className={`${styles.searchBar} ${searchResults.length && searchOpen ? styles.searchBarOpen : ''}`}
-				onClick={() => setSearchOpen(true)}
-				onChange={handleSearchChange}
-				placeholder={'Search for games'}
-			/>
+			>
+				<input
+					type="text"
+					onClick={() => setSearchOpen(true)}
+					onChange={handleSearchChange}
+					placeholder={'Search for games'}
+				/>
+				<Oval
+					height={30}
+					width={30}
+					color="#88c2f5"
+					secondaryColor="#88c2f5"
+					visible={isLoading}
+					ariaLabel="oval-loading"
+					strokeWidth={4}
+					strokeWidthSecondary={4}
+				/>
+			</div>
 			{searchResults.length && searchOpen ? (
 				<div className={styles.resultsContainer}>
 					{searchResults.map((game) => (
